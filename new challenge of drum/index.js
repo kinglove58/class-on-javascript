@@ -9,16 +9,32 @@ let sounds = {
   l: new Audio("sounds/snare.mp3"),
 };
 
-document.addEventListener("click", function (event) {
-  event.butttonClick;
-});
 for (let i = 0; i < drumButtons.length; i++) {
   drumButtons[i].addEventListener("click", function () {
     let buttonClick = this.innerHTML;
-    let sound = sounds[buttonClick];
-    if (sound) {
-      sound.currentTime = 0;
-      sound.play();
-    }
+    playSound(buttonClick);
+    animationKey(buttonClick);
   });
+}
+
+document.addEventListener("keydown", function (event) {
+  playSound(event.key);
+  animationKey(event.key);
+});
+
+function playSound(key) {
+  let sound = sounds[key];
+  if (sound) {
+    sound.currentTime = 0;
+    sound.play();
+  }
+}
+
+function animationKey(ojo) {
+  let activeButton = document.querySelector("." + ojo);
+  activeButton.classList.add("pressed");
+
+  setTimeout(function () {
+    activeButton.classList.remove("pressed");
+  }, 100);
 }
