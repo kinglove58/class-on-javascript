@@ -1,0 +1,22 @@
+.newItemEntry {
+  margin-bottom: 1rem;
+  position: sticky;
+  top: 0;
+  padding: 0.75rem;
+  form {
+    display: flex;
+    justify-content: space-between;
+  }
+  label {
+    position: absolute;
+    left: -1000px;
+  }
+  input[type="text"] {
+    width: 80%;
+    padding: 0.75rem;
+    font-size: 1.25rem;
+    outline: none;
+    border: 2px solid $textbox-bordercolor;
+    border-radius: 10px;
+  }
+}
