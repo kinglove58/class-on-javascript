@@ -1,0 +1,12 @@
+.listContainer {
+  min-height: 60vh;
+  padding: 0.75rem;
+  .listTitle {
+    display: flex;
+    margin-bottom: 0.5rem;
+    justify-content: space-between;
+  }
+  button {
+    background-color: $clear-button-color;
+  }
+}
