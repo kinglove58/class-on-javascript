@@ -13,7 +13,11 @@ document.addEventListener("readystatechange", (event) => {
 
 const initApp = () => {
   // Add Listeners
-
+  const itemEntryForm = document.getElementById("itemEntryForm");
+  itemEntryForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    processSubmission();
+  });
   // Procedure
   // load list item
   refreshThePage();
@@ -47,17 +51,39 @@ const renderList = () => {
 };
 
 const buildListItem = (item) => {
-  const div = document.createElement(div);
+  const div = document.createElement("div");
   div.className = "item";
   const check = document.createElement("input");
   check.type = "checkbox";
   check.id = item.getid();
-  // addClicklistenerToCheckbox(check);
+  addClicklistenerToCheckbox(check);
   const label = document.createElement("label");
   label.htmlFor = item.getId();
   label.textContent = item.getItem();
   div.appendChild(check);
   div.appendChild(label);
   const container = document.getElementById("listItem");
-  container.appendChild("div");
+  container.appendChild(div);
+};
+
+const addClicklistenerToCheckbox = (checkbox) => {
+  checkbox.addEventListener("click", (event) => {
+    toDoList.removeItemFromList(checkbox.id);
+    // TODO.  remove from persistent data
+    setTimeout(() => {
+      refreshThePage();
+    }, 1000);
+  });
+};
+
+const clearItemEntryField = () => {
+  document.getElementById("newItem").value = "";
+};
+
+const setFocusOnItemEntry = () => {
+  document.getElementById("newItem").focus();
+};
+
+const processSubmission = () => {
+  const newEntryText = getNewEntry();
 };
