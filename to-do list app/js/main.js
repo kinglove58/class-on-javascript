@@ -25,13 +25,13 @@ const initApp = () => {
 
 const refreshThePage = () => {
   clearListDisplay();
-  // renderList();
-  // clearItemEntryField();
-  // setFocusOnItemEntry();
+  renderList();
+  clearItemEntryField();
+  setFocusOnItemEntry();
 };
 
 const clearListDisplay = () => {
-  const parentElement = document.getElementById("listItem");
+  const parentElement = document.getElementById("listItems");
   deleteContents(parentElement);
 };
 
@@ -56,20 +56,21 @@ const buildListItem = (item) => {
   const check = document.createElement("input");
   check.type = "checkbox";
   check.id = item.getid();
+  check.tabIndex = 0;
   addClicklistenerToCheckbox(check);
   const label = document.createElement("label");
   label.htmlFor = item.getId();
   label.textContent = item.getItem();
   div.appendChild(check);
   div.appendChild(label);
-  const container = document.getElementById("listItem");
+  const container = document.getElementById("listItems");
   container.appendChild(div);
 };
 
 const addClicklistenerToCheckbox = (checkbox) => {
   checkbox.addEventListener("click", (event) => {
     toDoList.removeItemFromList(checkbox.id);
-    // TODO.  remove from persistent data
+    // TODO:  remove from persistent data
     setTimeout(() => {
       refreshThePage();
     }, 1000);
@@ -86,4 +87,30 @@ const setFocusOnItemEntry = () => {
 
 const processSubmission = () => {
   const newEntryText = getNewEntry();
+  if (!newEntryText.length) return;
+  const nextItemId = calcNextItemId();
+  const toDoItem = createNewItem(nextItemId, newEntryText);
+  toDoList.addItemToDoList(toDoItem);
+  // TODO: update persistent data
+  refreshThePage();
+};
+
+const getNewEntry = () => {
+  return document.getElementById("newItem").value.trim();
+};
+
+const calcNextItemId = () => {
+  let nextItemId = 1;
+  const list = toDoList.getList();
+  if (list.length > 0) {
+    nextItemId = list[list.length - 1].getId() + 1;
+  }
+  return nextItemId;
+};
+
+const createNewItem = (itemId, itemText) => {
+  const toDo = new ToDoItem();
+  toDo.setId(itemId);
+  toDo.setItem(itemText);
+  return toDo;
 };
