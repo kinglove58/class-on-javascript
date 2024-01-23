@@ -1,5 +1,5 @@
-import ToDoList from "./todolist";
-import ToDoItem from "./todoitem";
+import ToDoList from "./todolist.js";
+import ToDoItem from "./todoitem.js";
 
 const toDoList = new ToDoList();
 
@@ -34,8 +34,18 @@ const initApp = () => {
     }
   });
   // Procedure
-  // load list item
+  loadListObject();
   refreshThePage();
+};
+
+const loadListObject = () => {
+  const storedList = localStorage.getItem("myToDoList");
+  if (typeof storedList !== "string") return;
+  const parsedList = JSON.parse(storedList);
+  parsedList.forEach((itemObj) => {
+    const newToDoItem = createNewItem(itemObj._id, itemObj._item);
+    toDoList.addItemToDoList(newToDoItem);
+  });
 };
 
 const refreshThePage = () => {
@@ -70,7 +80,7 @@ const buildListItem = (item) => {
   div.className = "item";
   const check = document.createElement("input");
   check.type = "checkbox";
-  check.id = item.getid();
+  check.id = item.getId();
   check.tabIndex = 0;
   addClicklistenerToCheckbox(check);
   const label = document.createElement("label");
@@ -97,7 +107,7 @@ const updatePersistentData = (listArray) => {
 };
 
 const clearItemEntryField = () => {
-  document.getElementById("newItem").value = "";
+  document.getElementById("newItem").value = " ";
 };
 
 const setFocusOnItemEntry = () => {
