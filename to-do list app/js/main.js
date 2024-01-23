@@ -94,11 +94,13 @@ const buildListItem = (item) => {
 
 const addClicklistenerToCheckbox = (checkbox) => {
   checkbox.addEventListener("click", (event) => {
-    toDoList.removeItemFromList(checkbox.id);
-    updatePersistentData(toDoList.getList());
-    setTimeout(() => {
-      refreshThePage();
-    }, 1000);
+    if (checkbox.checked) {
+      toDoList.removeItemFromList(checkbox.id);
+      updatePersistentData(toDoList.getList());
+      /* setTimeout(() => {
+        refreshThePage();
+      }, 1000); */
+    }
   });
 };
 
